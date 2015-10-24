@@ -39,13 +39,12 @@ class node:
 
 
 class BSTree:
-    size = 0
-    root = None
-    keys = set([])
 
     def __init__(self, root = None):
         self.root = root
         self.size = 0
+        self.keys = set([])
+
 
     def length(self):
         return self.size
@@ -55,6 +54,9 @@ class BSTree:
 
     def __iter__(self):
         return self.root.__iter__()
+
+    def __str__(self):
+
 
     def set(self, key, value):
         if(self.root is not None):
@@ -69,3 +71,33 @@ class BSTree:
             return None
         else:
             return self.root._get(key);
+
+    def balance(self):
+        self.root = self._naiveRebalance()
+
+
+    def _naiveRebalance(self, keys = None):
+        print(keys)
+        if (keys == None):
+            keys = self.keys
+        if(not keys):
+            return None
+        else:
+            middle = int(len(keys)/2)
+            newKey = list(keys)[middle]
+            return node(
+                key = newKey,
+                val = self.get(newKey),
+                lhs = self._naiveRebalance(set(list(keys)[:middle])),
+                rhs = self._naiveRebalance(set(list(keys)[middle + 1:]))
+                )
+
+    # def _treeToVine(self):
+    #
+    # def _vineToTree(self):
+    #
+    # def _compress(self):
+
+
+#implementation of Day-Stout-Warren Tree rebalancing
+# def dayStoutWarren(tree):
